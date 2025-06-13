@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# change this to fit your monitors' specs
+wlr-randr --output HDMI-A-1 --above DP-2 --custom-mode 1920x1080@50
+wlr-randr --output DP-2 --mode 1920x1080@143.981003
+wlr-randr --output DP-1 --mode 1920x1080@74.973000 --right-of DP-2
