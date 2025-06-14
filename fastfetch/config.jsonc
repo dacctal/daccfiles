@@ -22,31 +22,31 @@
     {
       "type": "title",
       "key": "HST",
-      "keyColor": "light_red",
+      "keyColor": "red",
       "format": "{#38}{2}",
     },
     {
       "type": "kernel",
       "key": "KNL",
-      "keyColor": "red",
+      "keyColor": "yellow",
       "format": "{}",
     },
     {
       "type": "packages",
       "format": "{}",
       "key": "PKG",
-      "keyColor": "yellow",  
+      "keyColor": "light_yellow",  
     },
     {
       "type": "shell",
       "key": "SHL",
-      "keyColor": "light_yellow", 
+      "keyColor": "green", 
       "format": "{}",
     },
     {
       "type": "terminal",
       "key": "TRM",
-      "keyColor": "green", 
+      "keyColor": "cyan", 
       "format": "{}",
     },
     {

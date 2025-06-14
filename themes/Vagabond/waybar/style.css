@@ -1,0 +1,194 @@
+@define-color dark-black #070707;
+@define-color black #121111;
+@define-color dark-gray #262321;
+@define-color gray #302f2f;
+@define-color light-gray #434242;
+@define-color white #c7c4c3;
+@define-color yellow #f7864f;
+
+* {
+  border-radius: 0px;
+  border-radius: 8px;
+  font-family: Maple Mono NF;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 1px;
+}
+
+window#waybar {
+  background-color: @dark-black;
+  border: 2px solid @dark-black;
+  border-radius: 0px;
+}
+
+#workspaces button {
+  border: 2px solid @dark-gray;
+  background: @black;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 2 12px;
+  color: @white;
+}
+
+#workspaces button.active {
+  border: 2px solid @yellow;
+  background: @black;
+  color: @white;
+  padding: 2 24px;
+}
+
+#workspaces button.focused {
+  border: 2px solid @yellow;
+  background: @black;
+  color: @white;
+  padding: 2 24px;
+}
+
+#workspaces button:hover {
+  border: 2px solid @white;
+  background: @gray;
+  font-weight: 600;
+  color: @white;
+}
+
+#tags button {
+  border: 2px solid @dark-gray;
+  background: @black;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 2 12px;
+  color: @white;
+}
+
+#tags button.active {
+  border: 2px solid @yellow;
+  background: @black;
+  color: @white;
+  padding: 2 24px;
+}
+
+#tags button.focused {
+  border: 2px solid @light-gray;
+  background: @black;
+  color: @white;
+  padding: 2 24px;
+}
+
+#tags button:hover {
+  border: 2px solid @white;
+  background: @gray;
+  font-weight: 600;
+  color: @white;
+}
+
+#clock {
+  border: 2px solid @dark-gray;
+  background: @black;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 2 12px;
+  color: @white;
+}
+
+#clock:hover {
+  border: 2px solid @white;
+  background: @gray;
+  font-weight: 600;
+  color: @white;
+}
+
+#cpu {
+  border: 2px solid @dark-gray;
+  background: @black;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 2 12px;
+  color: @white;
+}
+
+#cpu:hover {
+  border: 2px solid @white;
+  background: @gray;
+  font-weight: 600;
+  color: @white;
+}
+
+#pulseaudio {
+  border: 2px solid @dark-gray;
+  background: @black;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 2 12px;
+  color: @white;
+}
+
+#pulseaudio:hover {
+  border: 2px solid @white;
+  background: @gray;
+  font-weight: 600;
+  color: @white;
+}
+
+#memory {
+  border: 2px solid @dark-gray;
+  background: @black;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 2 12px;
+  color: @white;
+}
+
+#memory:hover {
+  border: 2px solid @white;
+  background: @gray;
+  font-weight: 600;
+  color: @white;
+}
+
+#temperature {
+  border: 2px solid @dark-gray;
+  background: @black;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 2 12px;
+  color: @white;
+}
+
+#temperature:hover {
+  border: 2px solid @white;
+  background: @gray;
+  font-weight: 600;
+  color: @white;
+}
+
+#battery {
+  border: 2px solid @dark-gray;
+  background: @black;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 2 12px;
+  color: @white;
+}
+
+#battery:hover {
+  border: 2px solid @white;
+  background: @gray;
+  font-weight: 600;
+  color: @white;
+}
+
+#tray {
+  border: 2px solid @dark-gray;
+  background: @black;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 2 12px;
+  color: @white;
+}
+
+#tray:hover {
+  border: 2px solid @white;
+  background: @gray;
+  font-weight: 600;
+  color: @white;
+}
