@@ -1,3 +1,5 @@
+# Neovim Everpuccin Theme
+
 > [!WARNING] This is not a full configuration!
 > This file is a colorscheme, specifically made for the LazyVim package manager.
 > You'll have to copy it into your plugins folder if you've created one.
