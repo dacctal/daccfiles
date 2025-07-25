@@ -1,3 +1,6 @@
+# Hyprland Everpuccin Theme
+The ultimate Everpuccin experience
+
 > [!WARNING] This is not a full configuration!
 > You need to create your own (or copy my) exec.conf input.conf and monitor.conf.
 >
