@@ -3,7 +3,7 @@
   "logo": {
     "type": "auto",
     //"source": "~/.config/fastfetch/pluto-trnsp.png",
-    "source": "~/snc/prj/design/dacctal/black-hole/ep-trnsp-icon.png",
+    "source": "~/.config/fastfetch/ep-trnsp-icon.png",
     "width": 16,
     "height": 7,
     "padding": {
