@@ -1,0 +1,24 @@
+gaps inner 2px
+gaps outer 2px
+
+default_border pixel 2px
+default_floating_border pixel 2px
+
+# Status Bar:
+bar {
+  swaybar_command waybar
+}
+
+# -Colors-
+# name                    border  bg      text    ind     child_border
+client.focused            #ef944d #131515 #F1E4C2 #ef944d #ef944d
+client.focused_inactive   #1f2223 #131515 #F1E4C2 #1f2223 #1f2223
+client.unfocused          #1f2223 #131515 #F1E4C2 #1f2223 #1f2223
+client.urgent             #f16e65 #131515 #F1E4C2 #f16e65 #f16e65
+client.placeholder        #1f2223 #131515 #F1E4C2 #1f2223 #1f2223
+
+# Swayfx
+# comment these out if you don't use swayfx
+blur enable
+corner_radius 6
+shadows enable

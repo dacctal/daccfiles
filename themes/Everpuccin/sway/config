@@ -1,3 +1,7 @@
+include ./monitors
+include ./exec
+include ./visuals
+
 set $mod Mod4
 
 # direction keys
@@ -12,23 +16,8 @@ set $term foot
 set $menu fuzzel
 
 # Screenshots
-set $scsh grim -g "(slurp)" - | wl-copy
+set $scsh grim -g "$(slurp)" - | wl-copy
 set $fullscsh grim - | wl-copy
-
-# Wallpaper
-output * bg ~/snc/prj/design/wallpapers/other/flat/everforest.png fill
-# My monitors (change to work for yours):
-output DP-2 res 1920x1080@143.981Hz pos 0,0
-output DP-1 res 1920x1080@74.973Hz pos 1920,0
-output HDMI-A-1 modeline 141.50 1920 2032 2232 2544 1080 1083 1088 1114 -hsync +vsync 
-output HDMI-A-1 pos 0,-1080
-# You can get the names of your outputs by running: swaymsg -t get_outputs
-
-gaps inner 2px
-gaps outer 2px
-
-default_border pixel 2px
-default_floating_border pixel 2px
 
 ### Input configuration
 #   input "2:14:SynPS/2_Synaptics_TouchPad" {
@@ -47,7 +36,7 @@ default_floating_border pixel 2px
     bindsym $mod+p exec $menu
     floating_modifier $mod normal
     bindsym $mod+Shift+r reload
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e exit
 
 # Moving around:
     bindsym $mod+$left focus left
@@ -109,26 +98,7 @@ default_floating_border pixel 2px
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
     # Screenshots
-    bindsym Print exec grim -g "(slurp)" - | wl-copy
+    bindsym Print exec grim -g "$(slurp)" - | wl-copy
     bindsym Shift+Print exec grim - | wl-copy
-
-# Status Bar:
-bar {
-  swaybar_command waybar
-}
-
-# -Colors-
-# name                    border  bg      text    ind     child_border
-client.focused            #ef944d #131515 #F1E4C2 #ef944d #ef944d
-client.focused_inactive   #1f2223 #131515 #F1E4C2 #1f2223 #1f2223
-client.unfocused          #1f2223 #131515 #F1E4C2 #1f2223 #1f2223
-client.urgent             #f16e65 #131515 #F1E4C2 #f16e65 #f16e65
-client.placeholder        #1f2223 #131515 #F1E4C2 #1f2223 #1f2223
-
-# Swayfx
-# comment these out if you don't use swayfx
-blur enable
-corner_radius 6
-shadows enable
 
 include @sysconfdir@/sway/config.d/*
