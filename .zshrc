@@ -13,8 +13,6 @@ compinit
 
 EDITOR=nvim
 
-export DISPLAY=:1
-
 PROMPT='%F{yellow}%~%f > '
 
 fastfetch
