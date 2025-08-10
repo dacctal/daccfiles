@@ -1,14 +1,21 @@
-@define-color dark-black #0f0f0f;
-@define-color black #131515;
-@define-color dark-gray #1f2223;
-@define-color gray #242727;
-@define-color light-gray #505050;
-@define-color white #f1e4c2;
+@define-color black #0f0f0f;
+@define-color gray-0 #131414;
+@define-color gray-1 #1D1F1E;
+@define-color gray-2 #272A28;
+@define-color gray-3 #3A3F3C;
+@define-color gray-4 #585F5A;
+@define-color gray-5 #6B746E;
+@define-color gray-6 #878E7A;
+@define-color gray-7 #999C8B;
+@define-color gray-8 #B6B69A;
+@define-color gray-9 #D8CCB4;
+@define-color gray-10 #E3DAC9;
+@define-color white #F9EEE5;
+@define-color light-yellow #efbe71;
 @define-color yellow #ef944d;
 
 * {
-  border-radius: 0px;
-  border-radius: 8px;
+  border-radius: 12px;
   font-family: Maple Mono NF;
   font-weight: 600;
   font-size: 14px;
@@ -16,179 +23,65 @@
 }
 
 window#waybar {
-  background-color: @dark-black;
-  border: 2px solid @dark-black;
+  background-color: @black;
+  border: 2px solid @black;
   border-radius: 0px;
 }
 
-#workspaces button {
-  border: 2px solid @dark-gray;
-  background: @black;
+#workspaces, #tags {
+  border: none;
+  background: @gray-1;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 4px;
+  margin: 4px;
+}
+
+#workspaces button, #tags button {
+  border: none;
+  border-radius: 8px;
+  background: @gray-2;
   box-shadow: none;
   text-shadow: none;
   padding: 2 12px;
-  color: @white;
+  margin: 2px;
+  color: @light-yellow;
 }
 
-#workspaces button.active {
-  border: 2px solid @yellow;
-  background: @black;
-  color: @white;
+#workspaces button:hover, #tags button:hover {
+  border: none;
+  background: @gray-3;
+  font-weight: 600;
+  color: @light-yellow;
+}
+
+#workspaces button.active, button.focused, #tags button.active, button.focused {
+  border: none;
+  background: @yellow;
+  color: @black;
   padding: 2 24px;
 }
 
-#workspaces button.focused {
-  border: 2px solid @yellow;
-  background: @black;
-  color: @white;
+#workspaces button.active:hover, button.focused:hover, #tags button.active:hover, button.focused:hover {
+  border: none;
+  background: @light-yellow;
+  color: @black;
   padding: 2 24px;
 }
 
-#workspaces button:hover {
-  border: 2px solid @white;
-  background: @gray;
-  font-weight: 600;
-  color: @white;
-}
-
-#tags button {
-  border: 2px solid @dark-gray;
-  background: @black;
+#clock, #cpu, #pulseaudio, #memory, #temperature, #battery, #tray {
+  border: none;
+  background: @gray-1;
   box-shadow: none;
   text-shadow: none;
-  padding: 2 12px;
+  padding: 0 16px;
+  margin: 4px;
   color: @white;
 }
 
-#tags button.active {
-  border: 2px solid @yellow;
-  background: @black;
-  color: @white;
-  padding: 2 24px;
-}
-
-#tags button.focused {
-  border: 2px solid @light-gray;
-  background: @black;
-  color: @white;
-  padding: 2 24px;
-}
-
-#tags button:hover {
-  border: 2px solid @white;
-  background: @gray;
-  font-weight: 600;
-  color: @white;
-}
-
-#clock {
-  border: 2px solid @dark-gray;
-  background: @black;
-  box-shadow: none;
-  text-shadow: none;
-  padding: 2 12px;
-  color: @white;
-}
-
-#clock:hover {
-  border: 2px solid @white;
-  background: @gray;
-  font-weight: 600;
-  color: @white;
-}
-
-#cpu {
-  border: 2px solid @dark-gray;
-  background: @black;
-  box-shadow: none;
-  text-shadow: none;
-  padding: 2 12px;
-  color: @white;
-}
-
-#cpu:hover {
-  border: 2px solid @white;
-  background: @gray;
-  font-weight: 600;
-  color: @white;
-}
-
-#pulseaudio {
-  border: 2px solid @dark-gray;
-  background: @black;
-  box-shadow: none;
-  text-shadow: none;
-  padding: 2 12px;
-  color: @white;
-}
-
-#pulseaudio:hover {
-  border: 2px solid @white;
-  background: @gray;
-  font-weight: 600;
-  color: @white;
-}
-
-#memory {
-  border: 2px solid @dark-gray;
-  background: @black;
-  box-shadow: none;
-  text-shadow: none;
-  padding: 2 12px;
-  color: @white;
-}
-
-#memory:hover {
-  border: 2px solid @white;
-  background: @gray;
-  font-weight: 600;
-  color: @white;
-}
-
-#temperature {
-  border: 2px solid @dark-gray;
-  background: @black;
-  box-shadow: none;
-  text-shadow: none;
-  padding: 2 12px;
-  color: @white;
-}
-
-#temperature:hover {
-  border: 2px solid @white;
-  background: @gray;
-  font-weight: 600;
-  color: @white;
-}
-
-#battery {
-  border: 2px solid @dark-gray;
-  background: @black;
-  box-shadow: none;
-  text-shadow: none;
-  padding: 2 12px;
-  color: @white;
-}
-
-#battery:hover {
-  border: 2px solid @white;
-  background: @gray;
-  font-weight: 600;
-  color: @white;
-}
-
-#tray {
-  border: 2px solid @dark-gray;
-  background: @black;
-  box-shadow: none;
-  text-shadow: none;
-  padding: 2 12px;
-  color: @white;
-}
-
-#tray:hover {
-  border: 2px solid @white;
-  background: @gray;
+#clock:hover, #cpu:hover, #pulseaudio:hover, #memory:hover, #temperature:hover, #battery:hover, #tray:hover {
+  border: none;
+  background: @gray-3;
   font-weight: 600;
   color: @white;
 }
