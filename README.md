@@ -4,7 +4,7 @@ This includes all of the terminal, window manager, and other program configurati
 
 ## Special Thanks
 * Mjoyufull: https://github.com/Mjoyufull?tab=repositories
-Provided scripts & modules for otter-launcher, scripts for hyprland, and a great gyr fork
+Provided scripts & modules for otter-launcher, scripts for hyprland, and a great [gyr](https://github.com/Mjoyufull/gyr.git) fork
 
 * kuokuo123: https://github.com/kuokuo123
 Created the amazing otter-launcher project
