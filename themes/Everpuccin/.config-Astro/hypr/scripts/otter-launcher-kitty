@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# This is a bash script that toggles otter-launcher with foot terminal.
+# Modify foot --app-id to others, for example alacritty --class, if you use other emulators.
+# When run, otter-launcher will be launched if not already running, be focused if running but not being focused, and be closed when already running and focused.
+
+if [ -z $(hyprctl clients | grep "class: otter-launcher") ]; then
+  hyprctl dispatch exec "kitty --class otter-launcher -T otter-launcher -e sh -c 'sleep 0.05 && otter-launcher'"
+else
+  echo application_already_Running
+  if [ -z $(hyprctl activewindow | grep "class: otter-launcher") ]; then
+    hyprctl dispatch 'focuswindow class:otter-launcher'
+  else
+    hyprctl dispatch killactive none
+  fi
+fi

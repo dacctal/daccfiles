@@ -1,0 +1,253 @@
+#!/usr/bin/env bash
+
+# Detect available package managers
+AUR_HELPER=""
+HAS_PACMAN=false
+
+if command -v yay &>/dev/null; then
+    AUR_HELPER="yay"
+elif command -v paru &>/dev/null; then
+    AUR_HELPER="paru"
+fi
+
+if command -v pacman &>/dev/null; then
+    HAS_PACMAN=true
+fi
+
+if [[ -z "$AUR_HELPER" && "$HAS_PACMAN" == false ]]; then
+    echo "Error: No supported package manager found (yay, paru, or pacman)"
+    exit 1
+fi
+
+# Parse filter argument
+FILTER_SOURCE=""
+ORIGINAL_QUERY="$1"
+
+# Check for source-specific filters
+if [[ "$1" =~ ^(yay|paru|pacman)\*(.*)$ ]]; then
+    FILTER_SOURCE="${BASH_REMATCH[1]}"
+    REMAINING_QUERY="${BASH_REMATCH[2]}"
+
+    # Validate filter source is available
+    case "$FILTER_SOURCE" in
+    "yay")
+        if [[ "$AUR_HELPER" != "yay" ]]; then
+            echo "Error: yay is not available"
+            exit 1
+        fi
+        ;;
+    "paru")
+        if [[ "$AUR_HELPER" != "paru" ]]; then
+            echo "Error: paru is not available"
+            exit 1
+        fi
+        ;;
+    "pacman")
+        if [[ "$HAS_PACMAN" != true ]]; then
+            echo "Error: pacman is not available"
+            exit 1
+        fi
+        ;;
+    esac
+fi
+
+# Function to extract package name from formatted line
+extract_package_name() {
+    local line="$1"
+    echo "$line" | sed 's/^\[[^]]*\] *//'
+}
+
+# Function to extract source from formatted line
+extract_source() {
+    local line="$1"
+    echo "$line" | grep -oP '^\[([^\]]+)\]' | tr -d '[]'
+}
+
+# Create header text dynamically
+get_header() {
+    local sources=()
+
+    if [[ "$HAS_PACMAN" == true ]]; then
+        sources+=("pacman")
+    fi
+
+    if [[ -n "$AUR_HELPER" ]]; then
+        sources+=("$AUR_HELPER")
+    fi
+
+    local header="Sources: ${sources[*]}"
+
+    if [[ -n "$FILTER_SOURCE" ]]; then
+        header="$header | Filtering: $FILTER_SOURCE"
+    else
+        header="$header | Use: source* to filter"
+    fi
+
+    header="$header | ctrl-c: exit | ctrl-r: refresh"
+
+    echo "$header"
+}
+
+# Get full list of packages from enabled sources
+get_package_list() {
+    local temp_file=$(mktemp)
+
+    if [[ -n "$FILTER_SOURCE" ]]; then
+        case "$FILTER_SOURCE" in
+        "pacman")
+            if [[ "$HAS_PACMAN" == true ]]; then
+                pacman -Slq | sed "s/^/[pacman] /" >>"$temp_file"
+            fi
+            ;;
+        "yay" | "paru")
+            if [[ "$AUR_HELPER" == "$FILTER_SOURCE" ]]; then
+                $AUR_HELPER -Slqa | sed "s/^/[$AUR_HELPER] /" >>"$temp_file"
+            fi
+            ;;
+        esac
+    else
+        if [[ "$HAS_PACMAN" == true ]]; then
+            pacman -Slq | sed "s/^/[pacman] /" >>"$temp_file"
+        fi
+        if [[ -n "$AUR_HELPER" ]]; then
+            $AUR_HELPER -Slqa | sed "s/^/[$AUR_HELPER] /" >>"$temp_file"
+        fi
+    fi
+
+    if [[ -n "$REMAINING_QUERY" ]]; then
+        sort "$temp_file" | grep -iE "(^|\b)$REMAINING_QUERY"
+    else
+        sort "$temp_file"
+    fi
+
+    rm "$temp_file"
+}
+
+# Install selected packages
+install_packages() {
+    local packages=("$@")
+    local aur_packages=()
+    local pacman_packages=()
+
+    for pkg_with_source in "${packages[@]}"; do
+        local source=$(extract_source "$pkg_with_source")
+        local pkg=$(extract_package_name "$pkg_with_source")
+
+        case "$source" in
+        "pacman")
+            pacman_packages+=("$pkg")
+            ;;
+        *)
+            aur_packages+=("$pkg")
+            ;;
+        esac
+    done
+
+    if [[ ${#pacman_packages[@]} -gt 0 && "$HAS_PACMAN" == true ]]; then
+        echo "Installing ${#pacman_packages[@]} package(s) with pacman..."
+        sudo pacman -S --noconfirm "${pacman_packages[@]}"
+    fi
+
+    if [[ ${#aur_packages[@]} -gt 0 && -n "$AUR_HELPER" ]]; then
+        echo "Installing ${#aur_packages[@]} package(s) with $AUR_HELPER..."
+        $AUR_HELPER -S --noconfirm "${aur_packages[@]}"
+    fi
+
+    sudo updatedb 2>/dev/null
+    command -v omarchy-show-done &>/dev/null && omarchy-show-done
+}
+
+# Generate preview content (as executable scripts)
+write_preview_script() {
+    cat <<'EOF'
+#!/bin/bash
+pkg_line="$1"
+source=$(echo "$pkg_line" | grep -oP '^\[([^\]]+)\]' | tr -d '[]')
+pkg=$(echo "$pkg_line" | sed 's/^\[[^]]*\] *//')
+
+case "$source" in
+    "pacman")
+        pacman -Si "$pkg" 2>/dev/null || echo "Package info not available for $pkg"
+        ;;
+    *)
+        if [[ -n "$AUR_HELPER" ]]; then
+            AUR_HELPER=$(command -v yay || command -v paru)
+            $AUR_HELPER -Si "$pkg" 2>/dev/null || echo "Package info not available for $pkg"
+        else
+            echo "AUR helper not available"
+        fi
+        ;;
+esac
+EOF
+}
+
+write_buildinfo_script() {
+    cat <<'EOF'
+#!/bin/bash
+pkg_line="$1"
+source=$(echo "$pkg_line" | grep -oP '^\[([^\]]+)\]' | tr -d '[]')
+pkg=$(echo "$pkg_line" | sed 's/^\[[^]]*\] *//')
+
+case "$source" in
+    "pacman")
+        echo "=== Package Files (pacman) ==="
+        pacman -Fl "$pkg" 2>/dev/null | head -20 || echo "File list not available for $pkg"
+        ;;
+    *)
+        if [[ -n "$AUR_HELPER" ]]; then
+            AUR_HELPER=$(command -v yay || command -v paru)
+            echo "=== AUR Build Info ==="
+            $AUR_HELPER -G "$pkg" --print 2>/dev/null | tail -n +5 || echo "Build info not available for $pkg"
+        else
+            echo "AUR helper not available"
+        fi
+        ;;
+esac
+EOF
+}
+
+# Create temporary scripts
+PREVIEW_SCRIPT=$(mktemp)
+BUILDINFO_SCRIPT=$(mktemp)
+
+write_preview_script >"$PREVIEW_SCRIPT"
+write_buildinfo_script >"$BUILDINFO_SCRIPT"
+
+chmod +x "$PREVIEW_SCRIPT" "$BUILDINFO_SCRIPT"
+
+# Cleanup on exit
+trap 'rm -f "$PREVIEW_SCRIPT" "$BUILDINFO_SCRIPT"' EXIT
+
+# Set up fzf arguments
+header_text="$(get_header)"
+
+fzf_args=(
+    --multi
+    --header="$header_text"
+    --preview="$PREVIEW_SCRIPT {}"
+    --preview-label='alt-p: toggle preview, alt-b/B: toggle build info, alt-j/k: scroll, tab/ctrl-space: multi-select'
+    --preview-label-pos='bottom'
+    --preview-window='down:65%:wrap'
+    --bind='alt-p:toggle-preview'
+    --bind='alt-d:preview-half-page-down,alt-u:preview-half-page-up'
+    --bind='alt-k:preview-up,alt-j:preview-down'
+    --bind="alt-b:change-preview:$BUILDINFO_SCRIPT {}"
+    --bind="alt-B:change-preview:$PREVIEW_SCRIPT {}"
+    --bind='ctrl-space:toggle'
+    --bind='ctrl-r:reload(get_package_list)'
+    --bind='change:top'
+    --color='pointer:green,marker:green'
+    --prompt="$([ -n "$FILTER_SOURCE" ] && echo "$FILTER_SOURCE" || echo "All")> "
+)
+
+if [[ -n "$REMAINING_QUERY" ]]; then
+    fzf_args+=(--query="$REMAINING_QUERY")
+fi
+
+# Launch fzf with package list
+pkg_names=$(get_package_list | fzf "${fzf_args[@]}")
+
+if [[ -n "$pkg_names" ]]; then
+    mapfile -t pkg_array < <(echo "$pkg_names")
+    install_packages "${pkg_array[@]}"
+fi

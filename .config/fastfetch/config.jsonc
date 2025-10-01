@@ -1,0 +1,69 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "type": "auto",
+    //"source": "~/.config/fastfetch/gentoo.png",
+    "source": "~/.config/fastfetch/ep-wb-icon-trnsp.png",
+    //"source": "~/.config/fastfetch/pluto-trnsp.png",
+    //"source": "~/.config/fastfetch/ganymede2.png",
+    "width": 15,
+    "height": 7,
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "right": 3,
+      "left": 2,
+    },
+  },
+  "display": {
+    "separator": " › ",
+    "color": {
+      "title": "light_red",
+      "format": "{host-name}",
+    },
+  },
+  "modules": [
+    {
+      "type": "title",
+      "key": " ",
+      "keyColor": "red",
+      "format": "{#38}{2}",
+    },
+    {
+      "type": "os",
+      "key": " ",
+      "keyColor": "yellow",
+      "format": "{name}",
+    },
+    {
+      "type": "packages",
+      "format": "{}",
+      "key": " ",
+      "keyColor": "light_yellow",  
+    },
+    {
+      "type": "shell",
+      "key": ">_",
+      "keyColor": "green", 
+      "format": "{}",
+    },
+    {
+      "type": "terminal",
+      "key": " ",
+      "keyColor": "cyan", 
+      "format": "{}",
+    },
+    {
+      "type": "wm",
+      "key": " ",
+      "keyColor": "blue", 
+      "format": "{}",
+    },
+    {
+      "type": "memory",
+      "key": " ",
+      "keyColor": "magenta", 
+      "format": "{}",
+    },
+  ]
+}
