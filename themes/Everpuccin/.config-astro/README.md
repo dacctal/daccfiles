@@ -1,5 +1,5 @@
 # Everpuccin Astro
-All configuration directories are complete, although some might utilize applications configured in the main [daccfiles](https://github.com/dacctal/daccfiles) directory
+All configuration directories are complete, although some might utilize applications configured in the main [daccfiles](https://github.com/dacctal/daccfiles) directory, or in the [base](https://github.com/dacctal/daccfiles/blob/main/themes/Everpuccin/.config-base) directory.
 
 This image showcases the astro wallpaper, waybar configuration, and my own custom system information fetching program - [syfo](https://github.com/dacctal/syfo.git).
 ![wallpaper & fetch](https://github.com/dacctal/daccfiles/blob/main/themes/Everpuccin/.config-astro/images/wallpaper-fetch.png)
