@@ -3,7 +3,7 @@
 This includes all of the terminal, window manager, and other program configuration files belonging to and created by the one and only ***dacctal***.
 
 ## Special Thanks
-* Mjoyufull: https://github.com/Mjoyufull?tab=repositories
+* Mjoyufull: https://github.com/Mjoyufull
 Personally provided scripts & modules for otter-launcher, scripts for hyprland, and a great [gyr](https://github.com/Mjoyufull/gyr.git) fork (and overall awesome dude)
 
 * kuokuo123: https://github.com/kuokuo123
