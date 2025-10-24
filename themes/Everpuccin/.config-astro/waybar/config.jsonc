@@ -15,7 +15,7 @@
     "custom/media"
   ],
   "modules-center": [
-    "clock"
+      "clock"
   ],
   "modules-right": [
     "tray",
