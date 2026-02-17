@@ -1,0 +1,10 @@
+# Wallpaper
+output * bg ~/.config/sway/walls/caelus.png fill
+
+# My monitors (change to work for yours):
+output DP-2 res 1920x1080@143.981Hz pos 0,0
+output DP-1 res 1920x1080@74.973Hz pos 1920,0
+output HDMI-A-1 modeline 141.50 1920 2032 2232 2544 1080 1083 1088 1114 -hsync +vsync 
+output HDMI-A-1 pos 960,-1080
+
+# You can get the names of your outputs by running: swaymsg -t get_outputs

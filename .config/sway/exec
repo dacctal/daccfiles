@@ -1,0 +1,7 @@
+exec export QT_QPA_PLATFORMTHEME=qt6ct
+exec export XDG_CURRENT_DESKTOP=sway
+exec systemctl --user set-environment XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec systemctl --user start xdg-desktop-portal-wlr.service
+exec syncthing
+exec $term

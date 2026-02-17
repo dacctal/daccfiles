@@ -1,3 +1,0 @@
-exec systemctl --user start xdg-desktop-portal-wlr.service
-exec syncthing
-exec $term

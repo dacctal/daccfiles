@@ -1,39 +1,16 @@
-
-
-#   ██████╗ ████████╗████████╗███████╗██████╗                         
-#  ██╔═══██╗╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗                        
-#  ██║   ██║   ██║      ██║   █████╗  ██████╔╝█████╗                  
-#  ██║   ██║   ██║      ██║   ██╔══╝  ██╔══██╗╚════╝                  
-#  ╚██████╔╝   ██║      ██║   ███████╗██║  ██║                        
-#   ╚═════╝    ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝                        
-#  ██╗      █████╗ ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗███████╗██████╗ 
-#  ██║     ██╔══██╗██║   ██║████╗  ██║██╔════╝██║  ██║██╔════╝██╔══██╗
-#  ██║     ███████║██║   ██║██╔██╗ ██║██║     ███████║█████╗  ██████╔╝
-#  ██║     ██╔══██║██║   ██║██║╚██╗██║██║     ██╔══██║██╔══╝  ██╔══██╗
-#  ███████╗██║  ██║╚██████╔╝██║ ╚████║╚██████╗██║  ██║███████╗██║  ██║
-#  ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
-
-# Terminal shell script launcher, written in rust
-# Source Code: https://github.com/kuokuo123/otter-launcher
-
-# Recommended to be used in companion with sway-launcher-desktop to launch desktop applications
-# https://github.com/Biont/sway-launcher-desktop
-
-
 [general]
-default_module = "br" # The module to run when no prefix is matched
+default_module = "app" # The module to run when no prefix is matched
 empty_module = "a" # run with an empty prompt
 exec_cmd = "sh -c" # The exec command of your shell, default to sh
 # for example: "bach -c" for bash; "zsh -c" for zsh. This can also runs wm exec commands, like hyprctl dispatch exec
 vi_mode = true # set true to use vi keybinds, false to use emacs keybinds; default to emacs
-esc_to_abort = false # allow to quit with esc keypress; a useful option for vi users
+esc_to_abort = true # allow to quit with esc keypress; a useful option for vi users
 cheatsheet_entry = "?" # when entered, otter-launcher will show a list of configured modules
 cheatsheet_viewer = "less -R; clear" # the program that otter-launcher will pipe cheatsheet into
 clear_screen_after_execution = false # useful when chafa image flash back after module execution
 loop_mode = false # in loop mode, otter-launcher won't quit after running a module, useful when using scratchpad
-external_editor = "nvim" # if set, pressing ctrl+e (or pressing v in vi normal mode) will edit the input field in the specified program; default to no external editor
+external_editor = "" # if set, pressing ctrl+e (or pressing v in vi normal mode) will edit the input field in the specified program; default to no external editor
 #callback = "" # if set, otter-launcher will run the command after a module is executed; for example, it can call swaymsg to adjust window size
-
 
 # ASCII color codes are allowed with these options. However, \x1b should be replaced with \u001B (unicode escape) because the rust toml crate cannot read \x as an escaped character...
 [interface]
@@ -51,7 +28,7 @@ place_holder = "type and search"
 default_module_message = "      \u001B[33msearch\u001B[0m the internet" # if set, the text will be shown when the default module is in use
 empty_module_message = "" # the text to show when empty module is in use
 suggestion_mode = "list" # available options: list, hint
-suggestion_lines = 4 # length of the suggestion list, set to 0 to disable suggestions and tab completion
+suggestion_lines = 12 # length of the suggestion list, set to 0 to disable suggestions and tab completion
 indicator_with_arg_module = "\u001B[31m^\u001B[0m " # a sign showing whether the module should run with an argument
 indicator_no_arg_module = "\u001B[31m$\u001B[0m "
 prefix_padding = 3 # format prefixes to have a uniformed width; prefixes will be padded with spaces to have a least specified number of chars
@@ -65,15 +42,6 @@ move_right = 0
 move_up = 0
 
 
-# Modules are defined as followed
-[[modules]]
-description = "search with google"
-prefix = "g"
-# try wm's exec command if 'setsid -f' does not work, eg. 'hyprctl dispatch exec'
-cmd = "setsid -f xdg-open 'https://www.google.com/search?q={}'"
-with_argument = true # If "with_argument" is true, the {} in the cmd value will be replaced with user input. If the field is not explicitly set, will be taken as false.
-url_encode = true # "url_encode" should be true if the module is set to call webpages, as this ensures special characters in url being readable to browsers. It'd better be false with shell scripts. If the field is not explicitly set, will be taken as false.
-
 [[modules]]
 description = "search with brave"
 prefix = "br"
@@ -84,21 +52,40 @@ url_encode = true
 [[modules]]
 description = "kill a runing app"
 prefix = "k"
-cmd = '''ps -u "$USER" -o comm= | sort -u | fzf --header="pick an app to kill" | xargs -r pkill -9'''
+cmd = 'ps -u "$USER" -o comm= | sort -u | fsel --dmenu | xargs -r pkill -9'
 with_argument = true
 url_encode = true
 
 [[modules]]
-description = "launch apps with gyr"
+description = "launch apps with fsel"
 prefix = "a"
+cmd = "fsel -vv -r -d -ss \"{}\""
+with_argument = true
+
+[[modules]]
+description = "launch apps instantly"
+prefix = "app"
+cmd = "fsel -vv -r -d -p {}"
+with_argument = true
+
+[[modules]]
+description = "manage clipboard with fsel"
+prefix = "cl"
 cmd = """
-gyr -vv -s --replace
+fsel --cclip
 """
 
 [[modules]]
-description = "install from the aur"
-prefix = "aur"
-cmd = "~/.config/otter-launcher/aur"
+description = "find pkgs"
+prefix = "pm"
+cmd = "pmux -SD {}"
+with_argument = true
+
+[[modules]]
+description = "install pkgs"
+prefix = "i"
+cmd = "pmux -S {}"
+with_argument = true
 
 [[modules]]
 description = "power menu with fzf"
@@ -137,16 +124,3 @@ prefix = "dc"
 cmd = "setsid -f xdg-open 'https://dictionary.cambridge.org/dictionary/english/{}'"
 with_argument = true
 url_encode = true
-
-# fzf and fd are needed to run these functions
-[[modules]]
-description = "open files with fzf"
-prefix = "fo"
-cmd = "fd --type f | fzf --with-nth -1 --reverse --padding 1,3 --prompt 'Open Files: ' | setsid -f xargs -r -I {} xdg-open '{}'"
-
-[[modules]]
-description = "open folders with fzf"
-prefix = "yz"
-cmd = """
-fd --type d | fzf --with-nth -1 --reverse --padding 1,3 --prompt 'Open Folders: ' | xargs -r -I {} setsid -f "$(echo $TERM | sed 's/xterm-//g')" -e yazi '{}'
-"""

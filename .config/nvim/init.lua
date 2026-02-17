@@ -1,2 +1,4 @@
-require("dacctal.core")
-require("dacctal.lazy")
+require("config.keymaps")
+require("config.options")
+require("config.lazy")
+require("caelus.init").colorscheme()

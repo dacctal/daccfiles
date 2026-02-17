@@ -1,0 +1,3 @@
+return{
+	"alaviss/nim.nvim"
+}

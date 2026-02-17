@@ -1,0 +1,44 @@
+gaps inner 2px
+gaps outer 2px
+
+default_border pixel 2px
+default_floating_border pixel 2px
+
+# cursor
+seat seat0 xcursor_theme Bibata-Original-Ice 14
+
+# Status Bar:
+bar {
+  swaybar_command swaybar
+  font Terminess Nerd Font Bold Regular 12
+  position top
+  workspace_min_width 36
+  tray_padding 4
+  colors {
+    background #141514
+    statusline #ef934d
+    separator #ef934d
+    focused_background #1e1f1e
+    focused_statusline #ef934d
+    focused_separator #ef934d
+    focused_workspace #ef934d #ef934d #141514
+    active_workspace #7ec97e #7ec97e #141514
+    inactive_workspace #3b403c #3b403c #f4decd
+    urgent_workspace #f16e65 #f16e65 #141514
+    binding_mode #71b4d6 #71b4d6 #141514
+  }
+}
+
+# -Colors-
+# name                    border  bg      text    ind     child_border
+client.focused            #ef944d #141514 #f4decd #ef944d #ef944d
+client.focused_inactive   #1e1f1e #141514 #f4decd #1e1f1e #1e1f1e
+client.unfocused          #1e1f1e #141514 #f4decd #1e1f1e #1e1f1e
+client.urgent             #f16e65 #141514 #f4decd #f16e65 #f16e65
+client.placeholder        #1e1f1e #141514 #f4decd #1e1f1e #1e1f1e
+
+# Swayfx
+# comment these out if you don't use swayfx
+#blur enable
+#corner_radius 6
+#shadows enable
