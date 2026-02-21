@@ -1,0 +1,5 @@
+#TabsToolbar { display: none !important; }
+#sidebar-box #sidebar-header { display: none !important; }
+
+* { border-radius: 8px; }
+* { border-radius: 0px; }
